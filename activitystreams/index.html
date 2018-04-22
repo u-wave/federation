@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>üWave Activity Types</title>
+
+    <script
+      src='https://www.w3.org/Tools/respec/respec-w3c-common'
+      class='remove'></script>
+
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "unofficial",
+        noRecTrack: true,
+        editors: [{
+          name: "Renée Kooi",
+          url: "http://renee.kooi.me",
+        }],
+        github: "https://github.com/u-wave/activitystreams",
+        edDraftURI: "https://ns.u-wave.net/activitystreams",
+        shortName: "activitystreams-uwave"
+      };
+    </script>
+
+    <style>
+      thead {
+        background: #005A9C;
+        color: white;
+      }
+      thead th {
+        font-weight: normal;
+      }
+      table, td, th { border: 1px solid gray }
+      table { width: 100% ;}
+      td {
+        vertical-align: top;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <section id='abstract'>
+      <p>
+      This specification describes an Activity vocabulary for federated collaborative listening platforms.
+      </p>
+    </section>
+
+    <section id='sotd'></section>
+
+    <section id='introduction'>
+      <h2>Introduction</h2>
+    </section>
+
+    <section id='classes'>
+      <h2>Classes</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th colspan="2">Description</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+
+        <!-- Playlist -->
+        <tbody>
+          <tr>
+            <td rowspan="3"><dfn>Playlist</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#Playlist</code></td>
+            <td rowspan="3">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#Playlist",
+  "id": "https://u-wave.example/as/playlists/5a7051c1b616185503ee4da9",
+  "name": "My Playlist",
+  "published": "2018-04-22T16:44:05Z",
+  "updated": "2018-04-22T16:44:05Z",
+  "totalItems": 200,
+  "items": []
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>
+              <p>
+                Represents a named collection of playlist items.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Properties:</td>
+            <td>
+              <p>Inherits all properties from <a href="https://www.w3.org/ns/activitystreams#OrderedCollection">OrderedCollection</a></p>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- PlaylistItem -->
+        <tbody>
+          <tr>
+            <td rowspan="3"><dfn>PlaylistItem</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#PlaylistItem</code></td>
+            <td rowspan="3">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#PlaylistItem",
+  "id": "https://u-wave.example/as/playlistitems/5a7051c1b616185503ee4da9",
+  "media": "https://u-wave.example/as/media/5a7051c1b616185503ee4da9",
+  "published": "2018-04-22T16:44:05Z",
+  "updated": "2018-04-22T16:44:05Z",
+  "artist": "Song artist",
+  "title": "Song title",
+  "startSeconds": "PT0S",
+  "endSeconds": "PT220S"
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>
+              <p>
+                Represents a playlist item.
+              </p>
+              <p>
+                The value of the <a>startSeconds</a> property MUST be at least <code>PT0S</code> and MUST be less than
+                or equal to <a>endSeconds</a>. The value of the <a>endSeconds</a> property MUST be less than or equal
+                to the related <a>Media</a>'s <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-duration">duration</a>
+                and MUST be equal to or greater than <a>startSeconds</a>.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Properties:</td>
+            <td>
+              <p>
+                <code><a>media</a></code> |
+                <code><a>artist</a></code> |
+                <code><a>title</a></code> |
+                <code><a>startSeconds</a></code> |
+                <code><a>endSeconds</a></code>
+              </p>
+
+              <p>Inherits all properties from <a href="https://www.w3.org/ns/activitystreams#Object">Object</a></p>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- Media -->
+        <tbody>
+          <tr>
+            <td rowspan="3"><dfn>Media</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#Media</code></td>
+            <td rowspan="3">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#Media",
+  "id": "https://u-wave.example/as/playlistitems/5a7051c1b616185503ee4da9",
+  "published": "2018-04-22T16:44:05Z",
+  "updated": "2018-04-22T16:44:05Z",
+  "url": "https://youtube.com/watch?v=abcdefxyz",
+  "duration": "PT220S",
+  "artist": "Song artist",
+  "title": "Song title",
+  "startSeconds": "PT0S",
+  "endSeconds": "PT220S"
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>
+              <p>
+                Represents media from a local or remote source.
+              </p>
+              <p>
+                The value of the <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-url">url</a> property
+                may either be a direct URL to a video or audio file, or a URL to a media watch page on a service known
+                to the server.
+              </p>
+              <p>
+                The value of the <a>startSeconds</a> property MUST be at least <code>PT0S</code> and MUST be less than
+                or equal to <a>endSeconds</a>. The value of the <a>endSeconds</a> property MUST be less than or equal
+                to <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-duration">duration</a> and MUST be
+                equal to or greater than <a>startSeconds</a>.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Properties:</td>
+            <td>
+              <p>
+                <code><a>artist</a></code> |
+                <code><a>title</a></code> |
+                <code><a>startSeconds</a></code> |
+                <code><a>endSeconds</a></code>
+              </p>
+
+              <p>Inherits all properties from <a href="https://www.w3.org/ns/activitystreams#Object">Object</a></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id='properties'>
+      <h2>Properties</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th colspan="2">Description</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+
+        <!-- playlists -->
+        <tbody>
+          <tr>
+            <td rowspan="4"><dfn>playlists</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#playlists</code></td>
+            <td rowspan="4">
+              <pre class="example highlight json">{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    {"playlists": "https://ns.u-wave.net/activitystreams#playlists"}
+  ],
+  "type": "Person",
+  "playlists": "https://u-wave.example/as/users/5a7051c1b616185503ee4da9/playlists"
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>A link to a collection of playlists this <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-person">Person</a> has created.</td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <code><a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-person">Person</a></code>
+            </td>
+          </tr>
+          <tr>
+            <td>Range:</td>
+            <td>
+              <code><a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link">Link</a></code> |
+              <code><a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">Collection</a></code>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- media -->
+        <tbody>
+          <tr>
+            <td rowspan="4"><dfn>media</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#media</code></td>
+            <td rowspan="4">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#PlaylistItem",
+  "media": "https://u-wave.example/as/media/MEDIA-ID",
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>A link to the <a>Media</a> used by this playlist item.</td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <code><a>PlaylistItem</a></code>
+            </td>
+          </tr>
+          <tr>
+            <td>Range:</td>
+            <td>
+              <code><a>Media</a></code> |
+              <code><a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link">Link</a></code>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- artist -->
+        <tbody>
+          <tr>
+            <td rowspan="4"><dfn>artist</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#artist</code></td>
+            <td rowspan="4">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#Media",
+  "artist": "Song Artist",
+  "title": "Song Title",
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>String name of the artist responsible for a <a>Media</a>.</td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <code><a>Media</a></code> |
+              <code><a>PlaylistItem</a></code>
+            </td>
+          </tr>
+          <tr>
+            <td>Range:</td>
+            <td>
+              <code>xsd:string</code>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- title -->
+        <tbody>
+          <tr>
+            <td rowspan="4"><dfn>title</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#title</code></td>
+            <td rowspan="4">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#Media",
+  "artist": "Song Artist",
+  "title": "Song Title",
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>String name of title of a <a>Media</a>.</td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <code><a>Media</a></code> |
+              <code><a>PlaylistItem</a></code>
+            </td>
+          </tr>
+          <tr>
+            <td>Range:</td>
+            <td>
+              <code>xsd:string</code>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- startSeconds -->
+        <tbody>
+          <tr>
+            <td rowspan="4"><dfn>startSeconds</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#startSeconds</code></td>
+            <td rowspan="4">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#PlaylistItem",
+  "startSeconds": "PT0S",
+  "endSeconds": "PT220S",
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>The time at in seconds which to start playing a <a>Media</a>.</td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <code><a>Media</a></code> |
+              <code><a>PlaylistItem</a></code>
+            </td>
+          </tr>
+          <tr>
+            <td>Range:</td>
+            <td>
+              <code>xsd:duration</code>
+            </td>
+          </tr>
+        </tbody>
+
+        <!-- endSeconds -->
+        <tbody>
+          <tr>
+            <td rowspan="4"><dfn>endSeconds</dfn></td>
+            <td>URI:</td>
+            <td><code>https://ns.u-wave.net/activitystreams#endSeconds</code></td>
+            <td rowspan="4">
+              <pre class="example highlight json">{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "https://ns.u-wave.net/activitystreams#PlaylistItem",
+  "startSeconds": "PT0S",
+  "endSeconds": "PT220S",
+}</pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Notes:</td>
+            <td>The time at in seconds which to stop playing a <a>Media</a>.</td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <code><a>Media</a></code> |
+              <code><a>PlaylistItem</a></code>
+            </td>
+          </tr>
+          <tr>
+            <td>Range:</td>
+            <td>
+              <code>xsd:duration</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
