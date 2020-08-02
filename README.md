@@ -11,7 +11,7 @@ Where possible, existing web standards should be used.
   - Like mastodon we can disambiguate users by their home server. `reanna@u-wave.example` and `reanna@wlk.yt`
 - [ActivityStreams](./activitystreams) could be used to share playlists, plays, user profiles.
   - POST updates you do on a different server to your home server's [ActivityPub][] inbox (but see note in next point).
-- [ActivityPub][] has an `outbox` concept that seems like a nice replacement for the announce server's proprietary format, it could GET the outbox and receive HistoryEntry Objects. But we would not implement most other ActivityPub things so maybe there is a more focused spec that would be better suited.
+- [ActivityPub][] has an `outbox` concept that seems like a nice replacement for the announce server's custom format, it could GET the outbox and receive HistoryEntry Objects. But we would not implement most other ActivityPub things so maybe there is a more focused spec that would be better suited.
 
 ## License
 
