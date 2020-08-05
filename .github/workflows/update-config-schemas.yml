@@ -29,4 +29,5 @@ jobs:
           author_name: Automated
           author_email: github@asdf.kooi.me
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          # Using a custom access token so the gh-pages build will happen
+          GITHUB_TOKEN: ${{secrets.SCHEMA_ACCESS_TOKEN}}
