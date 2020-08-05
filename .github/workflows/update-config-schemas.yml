@@ -1,0 +1,32 @@
+name: Update üWave Core Config Schemas
+
+on:
+  repository_dispatch:
+    types: [update-config-schemas]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Checkout configs
+        uses: actions/checkout@v2
+        with:
+          repository: u-wave/core
+          path: _core
+      - name: Copy schemas
+        run: |
+          rm -rf config
+          mkdir -p config
+          cp -R _core/src/schemas/* config/
+      - name: Push update
+        uses: EndBug/add-and-commit@v4
+        if: success()
+        with:
+          add: config
+          message: Update üWave Core config schemas
+          author_name: Automated
+          author_email: github@asdf.kooi.me
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
